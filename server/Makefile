@@ -1,22 +1,13 @@
 # Makefile for Final project
-CROSS_COMPILE =
-ifeq ($(CC),)
-	CC = $(CROSS_COMPILE)gcc
-endif
-ifeq ($(CFLAGS),)
-	CFLAGS = -g -Wall -Werror 
-endif
-ifeq ($(LDFLAGS),)
-	LDFLAGS = -pthread -lrt
-endif
+CROSS_COMPILE=
+CC 	?= $(CROSS_COMPILE)gcc
+CFLAGS	?= -g -Werror -Wall
+LDFLAGS ?= -pthread -lrt
+SRC = client.c
+OUTPUT = client
 
-SRC := server.c
-TARGET ?= server
-
-all: $(TARGET)
-
-$(TARGET) : $(SRC)
-	$(CC) $(CFLAGS) -o $(TARGET) server.c $(INCLUDES) $(LDFLAGS)
+all:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(OUTPUT) $(SRC) 
 
 clean:
-	-rm -f *.o $(TARGET) *.elf *.map
+	-rm -f *.o $(OUTPUT) *.elf *.map
