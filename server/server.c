@@ -68,7 +68,7 @@ int daemon_creation()
 
 int main(int argc, char *argv[])
 {
-    char ip_string[INET_ADDRSTRLEN];
+   // char ip_string[INET_ADDRSTRLEN];
     
     openlog(NULL, 0, LOG_USER);
     signal(SIGINT, signal_handler);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     struct addrinfo hints, *server_info;
     
     int server_socket_fd;
-    int new_fd, bytes_sent;   ///CHANGE THESE
+    int new_fd;// bytes_sent;   ///CHANGE THESE
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_INET;  
@@ -160,18 +160,18 @@ int main(int argc, char *argv[])
         {
             if(errno == EWOULDBLOCK)
             {
-          
-                continue;
+          		//return(1);
             }
             syslog(LOG_ERR, "Error : accept with error no : %d", errno);
-            continue;
+            //return(1);
         }
     
-    char send_data[] = "Server is working";
+   // char send_data[] = "Server is working";
     
     while(!signal_interrupt)
     {
-    int bytes_sent = send(new_fd,"\n Server is working" , sizeof("\n Server is working"), 0);
+    //int bytes_sent = 
+    send(new_fd,"\n Server is working" , sizeof("\n Server is working"), 0);
     }
     
     close(server_socket_fd);
