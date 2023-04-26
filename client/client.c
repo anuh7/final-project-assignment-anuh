@@ -53,7 +53,7 @@ int main()
 {
         /* initialization */
         int sockfd, connfd;
-        char *ip_addr ="192.168.176.255";
+        char *ip_addr ="10.0.0.212";
         struct sockaddr_in server_addr;
 
         //open connection for sys logging, ident is NULL to use this Program for the user level messages
