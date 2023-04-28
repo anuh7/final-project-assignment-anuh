@@ -71,13 +71,19 @@ int main()
         bzero(&server_addr, sizeof(server_addr));
 
         server_addr.sin_family = AF_INET;
-        server_addr.sin_addr.s_addr = inet_addr(ip_addr);
+        //server_addr.sin_addr.s_addr = inet_addr(ip_addr);
         server_addr.sin_port = htons(PORT);
+	
+	if (inet_pton(AF_INET, "10.0.0.173", &server_addr.sin_addr)<= 0) 
+	{
+		printf("Address not supports");
+		exit(2);
+	}
 
         // connect the client socket to server socket
         connfd = connect(sockfd, (SA*)&server_addr, sizeof(server_addr));
 
-        if (connfd !=0) 
+        if (connfd <0) 
         {
                 syslog(LOG_ERR, "fail to connect with the server");
                 exit(0);
