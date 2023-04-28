@@ -94,15 +94,6 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(server_info);
 
-    if(is_daemon)
-    {
-        if(daemon_creation() != 0)
-        {
-            syslog(LOG_ERR, "Daemon creation failed");
-        }
-    }
-
-
     ret = listen(server_socket_fd, 1);
     if(ret != 0)
     {
