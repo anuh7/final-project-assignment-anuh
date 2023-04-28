@@ -49,7 +49,7 @@ void recv_pressure_data(int sockfd, int fd)
 	syslog(LOG_DEBUG,"printing the recieved data");
       	for(int i=0;i<bytes_received; i++)
 	{
-		syslog(LOG_DEBUG,"%c" buffer[i]);
+		syslog(LOG_DEBUG,"%c",buffer[i]);
 	}	
 }
 
