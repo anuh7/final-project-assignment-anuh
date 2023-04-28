@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
     }
     printf("listen success\n");
 
-    ret = accept(server_socket_fd, (struct sockaddr *)&their_addr, &addr_size);
+    new_fd = accept(server_socket_fd, (struct sockaddr *)&their_addr, &addr_size);
     if(ret  == -1)
     {
             syslog(LOG_ERR, "Error : accept with error no : %d", errno);
@@ -173,7 +173,8 @@ int main(int argc, char *argv[])
     
     while(!signal_interrupt)
     {
-   	 send(new_fd,"\n Server is working" , sizeof("\n Server is working"), 0);
+   	 send(new_fd,"\n Server is working", sizeof("\n Server is working"), 0);
+   	 write(new_fd, "\n Server is working2", sizeof("\n Server is working2"));
    	 printf("Inside while loop\n");
     }
     
