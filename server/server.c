@@ -74,6 +74,7 @@ int main(int argc, char *argv[])
 {
     int ret; 
     const int yes = 1;
+    socklen_t addr_size=sizeof(struct sockaddr);
     
     openlog(NULL, 0, LOG_USER);
     signal(SIGINT, signal_handler);
@@ -117,7 +118,7 @@ int main(int argc, char *argv[])
     }
 
     
-    ret = setsockopt(server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes))
+    ret = setsockopt(server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
     
     if (ret != 0)
     {
@@ -157,7 +158,7 @@ int main(int argc, char *argv[])
     }
     printf("listen success\n");
 
-    ret = accept(server_socket_fd, &their_addr, &addr_size);
+    ret = accept(server_socket_fd, (struct sockaddr *)&their_addr, &addr_size);
     if(ret  == -1)
     {
             syslog(LOG_ERR, "Error : accept with error no : %d", errno);
@@ -166,7 +167,7 @@ int main(int argc, char *argv[])
     else
     {
     	    syslog(LOG_INFO, "Accepted connection from %s", inet_ntoa(their_addr.sin_addr));
-    	    printf("Accepted connected from %s\n", inet_ntoa(client_addr.sin_Addr));
+    	    printf("Accepted connected from %s\n", inet_ntoa(their_addr.sin_addr));
     }
     
     
