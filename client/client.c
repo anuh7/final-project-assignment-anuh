@@ -25,7 +25,7 @@
 #define MAX 80
 #define PORT 9000
 #define SA struct sockaddr
-#define FILE_PATH "/home/socketdata"
+#define FILE_PATH "/root/home/socketdata"
 
 /* function definition */
 void recv_pressure_data(int sockfd, int fd)
@@ -41,11 +41,16 @@ void recv_pressure_data(int sockfd, int fd)
 			syslog(LOG_ERR,"Could'nt write total bytes to the file");
 			exit(6);
 		}
-        }   
-        if(bytes_received == -1)
+        }
+	if(bytes_received == -1)
         {
                 syslog(LOG_ERR, "Error: recv() with code, %d", errno);
-        }   
+        }
+	syslog(LOG_DEBUG,"printing the recieved data");
+      	for(int i=0;i<bytes_received; i++)
+	{
+		syslog(LOG_DEBUG,"%c" buffer[i]);
+	}	
 }
 
 /* main function */
