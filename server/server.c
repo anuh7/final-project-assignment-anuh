@@ -40,36 +40,6 @@ void signal_handler(int signum)
 }
 
 
-int daemon_creation()
-{
-    	pid_t pid;
-	pid = fork();
-	
-	if (pid == -1)
-	{
-		syslog(LOG_ERR, "fork failed in daemon process");
-		exit(-1);
-	}
-	
-	if (pid > 0)
-	{
-		exit(0);
-	}
-	
-	if (setsid() == -1)
-		return -1;
-	
-	if (chdir("/") == -1)
-		return -1;
-	
-	open ("/dev/null", O_RDWR); 
-	dup (0);
-	dup (0); 
-	
-	return 0;
-}
-
-
 int main(int argc, char *argv[])
 {
     int ret; 
@@ -79,23 +49,6 @@ int main(int argc, char *argv[])
     openlog(NULL, 0, LOG_USER);
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
-
-
-    bool is_daemon = false;
-
-    if( argv[1] == NULL )
-    {
-        is_daemon =  false;
-    }
-    else if( strcmp(argv[1], "-d") == 0)
-    {
-        is_daemon = true;
-    }
-    else
-    {
-	syslog(LOG_ERR, "invalid argument");
-	return -1;
-    }
  
     server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     
@@ -167,9 +120,9 @@ int main(int argc, char *argv[])
     }
     else
     {
-    	    syslog(LOG_INFO, "Accepted connection from %s", inet_ntoa(their_addr.sin_addr));
+    	    syslog(LOG_INFO, "Accepted connection from %s\n", inet_ntoa(their_addr.sin_addr));
     	    printf("Accepted connected from %s\n", inet_ntoa(their_addr.sin_addr));
-    	    printf("accept not working");
+    	    printf("accept working");
     }
     
     
