@@ -163,11 +163,13 @@ int main(int argc, char *argv[])
     {
             syslog(LOG_ERR, "Error : accept with error no : %d", errno);
             exit(1);
+            printf("accept not wokring");
     }
     else
     {
     	    syslog(LOG_INFO, "Accepted connection from %s", inet_ntoa(their_addr.sin_addr));
     	    printf("Accepted connected from %s\n", inet_ntoa(their_addr.sin_addr));
+    	    printf("accept not working");
     }
     
     
@@ -179,5 +181,9 @@ int main(int argc, char *argv[])
     }
     
     close(server_socket_fd);
+    close(new_fd);
+    printf("closed socket communication");
+    
+    return 0;
 }
   
