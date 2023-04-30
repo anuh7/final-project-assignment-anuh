@@ -1,19 +1,15 @@
 CROSS_COMPILE=
-CC      ?= $(CROSS_COMPILE)gcc
-CFLAGS  ?= -g -Werror -Wall
+CC 	?= $(CROSS_COMPILE)gcc
+CFLAGS	?= -g -Werror -Wall
 LDFLAGS ?= -pthread -lrt
-TARGET = lcd
-OBJFILES = wiringpi.o lcd.o
+SRC = lcd.c \
+	wiringpi.c \
+	 
 
-all: $(TARGET)
+OUTPUT = lcd
 
-default: $(TARGET)
-
-$(TARGET): $(OBJFILES)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TARGET) $(OBJFILES)
-
-.PHONY: clean
+all:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(OUTPUT) $(SRC) 
 
 clean:
-	rm -f *.o $(TARGET)
-
+	-rm -f *.o $(OUTPUT) *.elf *.map
