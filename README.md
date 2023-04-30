@@ -4,7 +4,8 @@
 
 ## Application Code
 The application code will be hosted here
-Socket communication code added to this repo.
+- Socket communication code
+- LCD code
 
 ##  Automotive Monitoring System ##
 
