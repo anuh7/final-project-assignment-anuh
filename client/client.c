@@ -1,7 +1,8 @@
-/* Author : Malola Simman Srinivasan Kannan
+/*  Author : Malola Simman Srinivasan Kannan
  *  Date : 23 April 2023
  *  mail id : masr4788@colorado.edu
  *  file name : client.c
+ *  Reference : https://www.geeksforgeeks.org/tcp-server-client-implementation-in-c
  */
 
 /* header files */
@@ -20,6 +21,8 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <syslog.h>
+#include "wiringpi.h"
+#include "lcd.h"
 
 /* macros */
 #define MAX 80
@@ -27,14 +30,34 @@
 #define SA struct sockaddr
 #define FILE_PATH "/root/home/socketdata"
 
+static int lcd_addr[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88,0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F,
+                       0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8 ,0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF,
+	               0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0X97, 0x98, 0x99, 0x9A, 0x9B, 0x9C ,0x9D, 0x9E, 0x9F,
+	               0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xD8, 0xD9, 0xDA, 0xDB, 0xDC ,0xDD, 0xDE, 0xDF};
+
+
 /* function definition */
 void recv_pressure_data(int sockfd, int fd)
 {
         char buffer[1024];
         int bytes_received=0;
         int write_status=0;
-         while ((bytes_received = recv(sockfd, buffer, 1024, 0)) > 0)
+        lcd_init();
+        setchar_mode();
+        while ((bytes_received = recv(sockfd, buffer, 1024, 0)) > 0)
         {
+                for(int i=0; buffer[i]!='\n';i++)
+                {
+                        printchar(buffer[i],lcd_addr[i]);
+                        if(i==63)
+                        {
+                                i=0;
+                        }
+                }
+		delay(4);
+                setcmd_mode();
+		delay(4);
+                lcd_byte(0x02);
                 write_status = write(fd, buffer, bytes_received);
                 if(write_status == -1)
 		{
@@ -46,11 +69,12 @@ void recv_pressure_data(int sockfd, int fd)
         {
                 syslog(LOG_ERR, "Error: recv() with code, %d", errno);
         }
-	syslog(LOG_DEBUG,"printing the recieved data");
+	syslog(LOG_DEBUG,"------client message------\n");
       	for(int i=0;i<bytes_received; i++)
 	{
 		syslog(LOG_DEBUG,"%c",buffer[i]);
-	}	
+	}
+        	
 }
 
 /* main function */
@@ -58,7 +82,7 @@ int main()
 {
         /* initialization */
         int sockfd, connfd;
-        char *ip_addr ="10.0.0.173";
+        char *ip_addr ="10.0.0.212";
         struct sockaddr_in server_addr;
 
         //open connection for sys logging, ident is NULL to use this Program for the user level messages
@@ -79,14 +103,7 @@ int main()
         server_addr.sin_family = AF_INET;
         server_addr.sin_addr.s_addr = inet_addr(ip_addr);
         server_addr.sin_port = htons(PORT);
-	/*
-	if (inet_pton(AF_INET, "10.0.0.173", &server_addr.sin_addr)<= 0) 
-	{
-		printf("Address not supports");
-		exit(2);
-	}
-	*/
-        // connect the client socket to server socket
+
         connfd = connect(sockfd, (SA*)&server_addr, sizeof(server_addr));
 
         if (connfd <0) 
