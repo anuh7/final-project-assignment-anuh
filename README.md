@@ -6,6 +6,7 @@
 The application code will be hosted here
 - Socket communication code
 - LCD code
+- BME code
 
 ##  Automotive Monitoring System ##
 
