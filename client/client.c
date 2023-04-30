@@ -78,13 +78,20 @@ void recv_pressure_data(int sockfd, int fd)
 }
 
 /* main function */
-int main()
+int main(int argc, char *argv [])
 {
         /* initialization */
         int sockfd, connfd;
-        char *ip_addr ="10.0.0.212";
+	char *ip_addr = NULL;
+	if (argc>1)
+	{
+		ip_addr = argv[1];
+	}     
+  	else
+	{
+		ip_addr ="10.0.0.212";
+	} 	
         struct sockaddr_in server_addr;
-
         //open connection for sys logging, ident is NULL to use this Program for the user level messages
         openlog(NULL, LOG_CONS | LOG_PID | LOG_PERROR, LOG_USER);
         
