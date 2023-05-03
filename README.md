@@ -17,6 +17,6 @@ The project overview can be found [Click here](https://github.com/cu-ecen-aeld/f
 The project overview can be found [Click here](https://github.com/users/anuh7/projects/1/views/1?groupedBy%5BcolumnId%5D=39074036)
 
 ## Team members ##
-Anuhya Kuraparthy - (anku3943@colorado.edu)
-Malola Simman Srinivasan Kannan - (masr4788@colorado.edu)
+-Anuhya Kuraparthy - (anku3943@colorado.edu)
+-Malola Simman Srinivasan Kannan - (masr4788@colorado.edu)
 
