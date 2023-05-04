@@ -20,3 +20,6 @@ The project overview can be found [Click here](https://github.com/users/anuh7/pr
 - Anuhya Kuraparthy - (anku3943@colorado.edu)
 - Malola Simman Srinivasan Kannan - (masr4788@colorado.edu)
 
+## Malola Simman Srinivasan Kannan Demo video wiki page (project Outline)
+The project overview can be found [Click here](https://github.com/anuh7/final-project-assignment-anuh/wiki/Malola-Simman-Srinivasan-Kannan-Final-Project-Video)
+
